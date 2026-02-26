@@ -1,909 +1,967 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ibrahim Saif - Code Universe</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            background: radial-gradient(ellipse at center, #0f0f23 0%, #000 70%);
-            font-family: 'Courier New', monospace;
-            color: white;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
+      body {
+        background: radial-gradient(ellipse at center, #0f0f23 0%, #000 70%);
+        font-family: 'Courier New', monospace;
+        color: white;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
 
-        .stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
+      .stars {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+      }
 
-        .star {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 3s infinite alternate;
-        }
+      .star {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        animation: twinkle 3s infinite alternate;
+      }
 
-        @keyframes twinkle {
-            0% { opacity: 0.3; }
-            100% { opacity: 1; }
+      @keyframes twinkle {
+        0% {
+          opacity: 0.3;
         }
-
-        .universe-container {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2;
+        100% {
+          opacity: 1;
         }
+      }
 
+      .universe-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+      }
+
+      .center-sun {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #ff6b35, #f7931e, #ffcd3c);
+        box-shadow:
+          0 0 50px #ff6b35,
+          0 0 100px #ff6b35;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        animation:
+          pulse 2s infinite alternate,
+          rotate 20s linear infinite;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        z-index: 10;
+      }
+
+      .center-sun:hover {
+        transform: scale(1.1);
+      }
+
+      @keyframes pulse {
+        0% {
+          box-shadow:
+            0 0 50px #ff6b35,
+            0 0 100px #ff6b35;
+        }
+        100% {
+          box-shadow:
+            0 0 70px #ff6b35,
+            0 0 140px #ff6b35;
+        }
+      }
+
+      @keyframes rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .sun-content {
+        text-align: center;
+        animation: counter-rotate 20s linear infinite;
+      }
+
+      @keyframes counter-rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(-360deg);
+        }
+      }
+
+      .name {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .title {
+        font-size: 12px;
+        opacity: 0.9;
+      }
+
+      .orbit {
+        position: absolute;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        animation: orbit-rotate 15s linear infinite;
+        pointer-events: none;
+      }
+
+      @keyframes orbit-rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .planet {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+        text-align: center;
+        font-weight: bold;
+        animation: planet-counter-rotate 15s linear infinite;
+        box-shadow: 0 0 20px currentColor;
+        pointer-events: auto;
+      }
+
+      @keyframes planet-counter-rotate {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(-360deg);
+        }
+      }
+
+      .planet:hover {
+        transform: scale(1.2);
+        z-index: 15;
+      }
+
+      .planet-experience {
+        background: linear-gradient(45deg, #8e2de2, #4a00e0);
+        top: -40px;
+        left: 50%;
+        margin-left: -40px;
+        color: #fff;
+      }
+
+      .planet-java {
+        background: linear-gradient(45deg, #ed8b00, #f89820);
+        top: 50%;
+        right: -40px;
+        margin-top: -40px;
+        color: #fff;
+      }
+
+      .planet-cpp {
+        background: linear-gradient(45deg, #00599c, #004482);
+        bottom: -40px;
+        left: 50%;
+        margin-left: -40px;
+        color: #fff;
+      }
+
+      .planet-web {
+        background: linear-gradient(45deg, #e34c26, #f06529, #264de4);
+        top: 50%;
+        left: -40px;
+        margin-top: -40px;
+        color: #fff;
+      }
+
+      .orbit-1 {
+        width: 350px;
+        height: 350px;
+        animation-duration: 12s;
+      }
+      .orbit-2 {
+        width: 450px;
+        height: 450px;
+        animation-duration: 18s;
+        animation-direction: reverse;
+      }
+      .orbit-3 {
+        width: 550px;
+        height: 550px;
+        animation-duration: 25s;
+      }
+      .orbit-4 {
+        width: 650px;
+        height: 650px;
+        animation-duration: 30s;
+        animation-direction: reverse;
+      }
+
+      .info-panel {
+        position: fixed;
+        top: 50%;
+        left: -400px;
+        transform: translateY(-50%);
+        width: 380px;
+        height: 500px;
+        background: rgba(0, 0, 0, 0.9);
+        border: 2px solid #00ff88;
+        border-radius: 20px;
+        padding: 30px;
+        transition: left 0.5s ease;
+        z-index: 20;
+        box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+        overflow-y: auto;
+      }
+
+      .info-panel.active {
+        left: 30px;
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: none;
+        border: none;
+        color: #00ff88;
+        font-size: 24px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .close-btn:hover {
+        transform: scale(1.2);
+      }
+
+      .contact-info {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: rgba(0, 0, 0, 0.8);
+        border: 2px solid #ff6b35;
+        border-radius: 15px;
+        padding: 20px;
+        min-width: 250px;
+        z-index: 20;
+        box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+      }
+
+      .contact-info h3 {
+        color: #ff6b35;
+        margin-bottom: 10px;
+        font-size: 18px;
+      }
+
+      .contact-info p {
+        margin: 8px 0;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .contact-info a {
+        color: #00ff88;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .contact-info a:hover {
+        color: #ffffff;
+      }
+
+      .tech-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin: 20px 0;
+      }
+
+      .tech-item {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 8px;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .tech-item:hover {
+        background: rgba(0, 255, 136, 0.2);
+        border-color: #00ff88;
+      }
+
+      .project-list {
+        max-height: 200px;
+        overflow-y: auto;
+        margin: 15px 0;
+      }
+
+      .project-item {
+        background: rgba(255, 255, 255, 0.05);
+        margin: 8px 0;
+        padding: 10px;
+        border-radius: 8px;
+        border-left: 3px solid #00ff88;
+        font-size: 13px;
+      }
+
+      .project-item h4 {
+        color: #00ff88;
+        margin-bottom: 5px;
+        font-size: 14px;
+      }
+
+      .floating-particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .particle {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        background: #00ff88;
+        border-radius: 50%;
+        opacity: 0.7;
+        animation: float 6s infinite ease-in-out;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) translateX(0px);
+          opacity: 0.7;
+        }
+        50% {
+          transform: translateY(-20px) translateX(10px);
+          opacity: 1;
+        }
+      }
+
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        transition: opacity 1s ease;
+      }
+
+      .loading-screen.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .loader {
+        border: 4px solid rgba(255, 255, 255, 0.1);
+        border-left: 4px solid #00ff88;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .terminal-text {
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .typing-effect {
+        border-right: 2px solid #00ff88;
+        animation: blink 1s infinite;
+      }
+
+      @keyframes blink {
+        0%,
+        50% {
+          border-color: #00ff88;
+        }
+        51%,
+        100% {
+          border-color: transparent;
+        }
+      }
+
+      .skills-radar {
+        position: fixed;
+        top: 30px;
+        right: 30px;
+        width: 150px;
+        height: 150px;
+        border: 2px solid #00ff88;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 20;
+        animation: radar-spin 4s linear infinite;
+      }
+
+      @keyframes radar-spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .radar-line {
+        position: absolute;
+        width: 50%;
+        height: 2px;
+        background: linear-gradient(to right, #00ff88, transparent);
+        transform-origin: right center;
+      }
+
+      @keyframes counter-radar {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(-360deg);
+        }
+      }
+
+      .mobile-menu {
+        display: none;
+      }
+
+      @media (max-width: 768px) {
         .center-sun {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #ff6b35, #f7931e, #ffcd3c);
-            box-shadow: 0 0 50px #ff6b35, 0 0 100px #ff6b35;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            animation: pulse 2s infinite alternate, rotate 20s linear infinite;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            z-index: 10;
-        }
-
-        .center-sun:hover {
-            transform: scale(1.1);
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 50px #ff6b35, 0 0 100px #ff6b35; }
-            100% { box-shadow: 0 0 70px #ff6b35, 0 0 140px #ff6b35; }
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .sun-content {
-            text-align: center;
-            animation: counter-rotate 20s linear infinite;
-        }
-
-        @keyframes counter-rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(-360deg); }
+          width: 150px;
+          height: 150px;
         }
 
         .name {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 5px;
+          font-size: 14px;
         }
 
         .title {
-            font-size: 12px;
-            opacity: 0.9;
+          font-size: 10px;
         }
 
-        .orbit {
-            position: absolute;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: orbit-rotate 15s linear infinite;
+        .orbit-1 {
+          width: 250px;
+          height: 250px;
         }
-
-        @keyframes orbit-rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .orbit-2 {
+          width: 320px;
+          height: 320px;
+        }
+        .orbit-3 {
+          width: 400px;
+          height: 400px;
+        }
+        .orbit-4 {
+          width: 480px;
+          height: 480px;
         }
 
         .planet {
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 12px;
-            text-align: center;
-            font-weight: bold;
-            animation: planet-counter-rotate 15s linear infinite;
-            box-shadow: 0 0 20px currentColor;
+          width: 60px;
+          height: 60px;
+          font-size: 10px;
         }
-
-        @keyframes planet-counter-rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(-360deg); }
-        }
-
-        .planet:hover {
-            transform: scale(1.2);
-            z-index: 15;
-        }
-
-        .planet-python {
-            background: linear-gradient(45deg, #3776ab, #ffd43b);
-            top: -40px;
-            left: 50%;
-            margin-left: -40px;
-            color: #fff;
-        }
-
-        .planet-java {
-            background: linear-gradient(45deg, #ed8b00, #f89820);
-            top: 50%;
-            right: -40px;
-            margin-top: -40px;
-            color: #fff;
-        }
-
-        .planet-cpp {
-            background: linear-gradient(45deg, #00599c, #004482);
-            bottom: -40px;
-            left: 50%;
-            margin-left: -40px;
-            color: #fff;
-        }
-
-        .planet-web {
-            background: linear-gradient(45deg, #e34c26, #f06529, #264de4);
-            top: 50%;
-            left: -40px;
-            margin-top: -40px;
-            color: #fff;
-        }
-
-        .orbit-1 { width: 350px; height: 350px; animation-duration: 12s; }
-        .orbit-2 { width: 450px; height: 450px; animation-duration: 18s; animation-direction: reverse; }
-        .orbit-3 { width: 550px; height: 550px; animation-duration: 25s; }
-        .orbit-4 { width: 650px; height: 650px; animation-duration: 30s; animation-direction: reverse; }
 
         .info-panel {
-            position: fixed;
-            top: 50%;
-            left: -400px;
-            transform: translateY(-50%);
-            width: 380px;
-            height: 500px;
-            background: rgba(0, 0, 0, 0.9);
-            border: 2px solid #00ff88;
-            border-radius: 20px;
-            padding: 30px;
-            transition: left 0.5s ease;
-            z-index: 20;
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
-            overflow-y: auto;
+          width: calc(100% - 40px);
+          left: -100%;
+          height: calc(100% - 40px);
         }
 
         .info-panel.active {
-            left: 30px;
+          left: 20px;
         }
 
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: #00ff88;
-            font-size: 24px;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .close-btn:hover {
-            transform: scale(1.2);
-        }
-
-        .contact-info {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid #ff6b35;
-            border-radius: 15px;
-            padding: 20px;
-            min-width: 250px;
-            z-index: 20;
-            box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
-        }
-
-        .contact-info h3 {
-            color: #ff6b35;
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-
-        .contact-info p {
-            margin: 8px 0;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .contact-info a {
-            color: #00ff88;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .contact-info a:hover {
-            color: #ffffff;
-        }
-
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .tech-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 8px;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .tech-item:hover {
-            background: rgba(0, 255, 136, 0.2);
-            border-color: #00ff88;
-        }
-
-        .project-list {
-            max-height: 200px;
-            overflow-y: auto;
-            margin: 15px 0;
-        }
-
-        .project-item {
-            background: rgba(255, 255, 255, 0.05);
-            margin: 8px 0;
-            padding: 10px;
-            border-radius: 8px;
-            border-left: 3px solid #00ff88;
-            font-size: 13px;
-        }
-
-        .project-item h4 {
-            color: #00ff88;
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
-
-        .floating-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .particle {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: #00ff88;
-            border-radius: 50%;
-            opacity: 0.7;
-            animation: float 6s infinite ease-in-out;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.7; }
-            50% { transform: translateY(-20px) translateX(10px); opacity: 1; }
-        }
-
-        .education-badge {
-            position: fixed;
-            top: 30px;
-            left: 30px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            border-radius: 15px;
-            padding: 15px 20px;
-            border: 2px solid #667eea;
-            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
-            z-index: 20;
-        }
-
-        .education-badge h3 {
-            font-size: 16px;
-            margin-bottom: 5px;
-            color: #ffffff;
-        }
-
-        .education-badge p {
-            font-size: 12px;
-            opacity: 0.9;
-            margin: 3px 0;
-        }
-
-        .loading-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            transition: opacity 1s ease;
-        }
-
-        .loading-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loader {
-            border: 4px solid rgba(255, 255, 255, 0.1);
-            border-left: 4px solid #00ff88;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .terminal-text {
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .typing-effect {
-            border-right: 2px solid #00ff88;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink {
-            0%, 50% { border-color: #00ff88; }
-            51%, 100% { border-color: transparent; }
-        }
-
+        .contact-info,
         .skills-radar {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            width: 150px;
-            height: 150px;
-            border: 2px solid #00ff88;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 20;
-            animation: radar-spin 4s linear infinite;
-        }
-
-        @keyframes radar-spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .radar-line {
-            position: absolute;
-            width: 50%;
-            height: 2px;
-            background: linear-gradient(to right, #00ff88, transparent);
-            transform-origin: right center;
-        }
-
-        @keyframes counter-radar {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(-360deg); }
+          display: none;
         }
 
         .mobile-menu {
-            display: none;
+          display: block;
+          position: fixed;
+          bottom: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: rgba(0, 0, 0, 0.9);
+          border: 2px solid #00ff88;
+          border-radius: 25px;
+          padding: 10px 20px;
+          z-index: 25;
         }
 
-        @media (max-width: 768px) {
-            .center-sun {
-                width: 150px;
-                height: 150px;
-            }
-
-            .name {
-                font-size: 14px;
-            }
-
-            .title {
-                font-size: 10px;
-            }
-
-            .orbit-1 { width: 250px; height: 250px; }
-            .orbit-2 { width: 320px; height: 320px; }
-            .orbit-3 { width: 400px; height: 400px; }
-            .orbit-4 { width: 480px; height: 480px; }
-
-            .planet {
-                width: 60px;
-                height: 60px;
-                font-size: 10px;
-            }
-
-            .info-panel {
-                width: calc(100% - 40px);
-                left: -100%;
-                height: calc(100% - 40px);
-            }
-
-            .info-panel.active {
-                left: 20px;
-            }
-
-            .contact-info,
-            .education-badge,
-            .skills-radar {
-                display: none;
-            }
-
-            .mobile-menu {
-                display: block;
-                position: fixed;
-                bottom: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: rgba(0, 0, 0, 0.9);
-                border: 2px solid #00ff88;
-                border-radius: 25px;
-                padding: 10px 20px;
-                z-index: 25;
-            }
-
-            .mobile-menu button {
-                background: none;
-                border: none;
-                color: #00ff88;
-                font-size: 12px;
-                margin: 0 10px;
-                cursor: pointer;
-                padding: 5px 10px;
-                border-radius: 10px;
-                transition: background 0.3s ease;
-            }
-
-            .mobile-menu button:hover {
-                background: rgba(0, 255, 136, 0.2);
-            }
+        .mobile-menu button {
+          background: none;
+          border: none;
+          color: #00ff88;
+          font-size: 12px;
+          margin: 0 10px;
+          cursor: pointer;
+          padding: 5px 10px;
+          border-radius: 10px;
+          transition: background 0.3s ease;
         }
+
+        .mobile-menu button:hover {
+          background: rgba(0, 255, 136, 0.2);
+        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="loading-screen" id="loadingScreen">
-        <div>
-            <div class="loader"></div>
-            <p style="margin-top: 20px; color: #00ff88; font-family: 'Courier New', monospace;">
-                Initializing Code Universe...
-            </p>
-        </div>
+      <div>
+        <div class="loader"></div>
+        <p
+          style="
+            margin-top: 20px;
+            color: #00ff88;
+            font-family: 'Courier New', monospace;
+          "
+        >
+          Initializing Code Universe...
+        </p>
+      </div>
     </div>
 
     <div class="stars" id="starsContainer"></div>
     <div class="floating-particles" id="particlesContainer"></div>
 
-    <div class="education-badge">
-        <h3>🎓 Education</h3>
-        <p><strong>Asia Pacific University</strong></p>
-        <p>BSC Computer Science</p>
-        <p>GPA: 3.165 | 2023-2026</p>
-    </div>
-
     <div class="skills-radar">
-        <div class="radar-line"></div>
-        <div style="color: #00ff88; font-size: 12px; text-align: center; animation: counter-radar 4s linear infinite;">
-            Skills<br>Radar
-        </div>
+      <div class="radar-line"></div>
+      <div
+        style="
+          color: #00ff88;
+          font-size: 12px;
+          text-align: center;
+          animation: counter-radar 4s linear infinite;
+        "
+      >
+        Skills<br />Radar
+      </div>
     </div>
 
     <div class="universe-container">
-        <div class="center-sun" onclick="showInfo('about')">
-            <div class="sun-content">
-                <div class="name">Ibrahim Saif</div>
-                <div class="title">Software Developer</div>
-            </div>
+      <div class="center-sun" onclick="showInfo('about')">
+        <div class="sun-content">
+          <div class="name">Ibrahim Saif</div>
+          <div class="title">Software Developer</div>
         </div>
+      </div>
 
-        <div class="orbit orbit-1">
-            <div class="planet planet-python" onclick="showInfo('python')">
-                Python<br>Projects
-            </div>
+      <div class="orbit orbit-1">
+        <div class="planet planet-experience" onclick="showInfo('experience')">
+          Work<br />Experience
         </div>
+      </div>
 
-        <div class="orbit orbit-2">
-            <div class="planet planet-java" onclick="showInfo('java')">
-                Java<br>Apps
-            </div>
+      <div class="orbit orbit-2">
+        <div class="planet planet-java" onclick="showInfo('java')">
+          Java<br />Apps
         </div>
+      </div>
 
-        <div class="orbit orbit-3">
-            <div class="planet planet-cpp" onclick="showInfo('cpp')">
-                C/C++<br>Systems
-            </div>
+      <div class="orbit orbit-3">
+        <div class="planet planet-cpp" onclick="showInfo('cpp')">
+          C/C++<br />Systems
         </div>
+      </div>
 
-        <div class="orbit orbit-4">
-            <div class="planet planet-web" onclick="showInfo('web')">
-                Web<br>Tech
-            </div>
+      <div class="orbit orbit-4">
+        <div class="planet planet-web" onclick="showInfo('web')">
+          Web<br />Tech
         </div>
+      </div>
     </div>
 
     <div class="contact-info">
-        <h3>📞 Contact</h3>
-        <p>📧 <a href="mailto:dev.ibrahim.saif@gmail.com">dev.ibrahim.saif@gmail.com</a></p>
-        <p>📱 <a href="tel:+60182301054">+60182301054</a></p>
-        <p>🐙 <a href="https://github.com/IbrahimSaif197" target="_blank">github.com/IbrahimSaif197</a></p>
-        <p>📍 Persiaran Serdang Perdana</p>
+      <h3>📞 Contact</h3>
+      <p>
+        📧
+        <a href="mailto:dev.ibrahim.saif@gmail.com"
+          >dev.ibrahim.saif@gmail.com</a
+        >
+      </p>
+      <p>📱 <a href="tel:+60182301054">+60 18-230 1054</a></p>
+      <p>
+        🐙
+        <a href="https://github.com/IbrahimSaif197" target="_blank"
+          >github.com/IbrahimSaif197</a
+        >
+      </p>
     </div>
 
     <div class="mobile-menu">
-        <button onclick="showInfo('about')">About</button>
-        <button onclick="showInfo('python')">Python</button>
-        <button onclick="showInfo('java')">Java</button>
-        <button onclick="showInfo('web')">Web</button>
+      <button onclick="showInfo('about')">About</button>
+      <button onclick="showInfo('experience')">Experience</button>
+      <button onclick="showInfo('java')">Java</button>
+      <button onclick="showInfo('web')">Web</button>
     </div>
 
     <div class="info-panel" id="infoPanel">
-        <button class="close-btn" onclick="closeInfo()">×</button>
-        <div id="panelContent" class="terminal-text"></div>
+      <button class="close-btn" onclick="closeInfo()">×</button>
+      <div id="panelContent" class="terminal-text"></div>
     </div>
 
     <script>
-        function createStars() {
-            const starsContainer = document.getElementById('starsContainer');
-            for (let i = 0; i < 200; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.width = star.style.height = (Math.random() * 3 + 1) + 'px';
-                star.style.animationDelay = Math.random() * 3 + 's';
-                starsContainer.appendChild(star);
-            }
+      function createStars() {
+        const starsContainer = document.getElementById('starsContainer');
+        for (let i = 0; i < 200; i++) {
+          const star = document.createElement('div');
+          star.className = 'star';
+          star.style.left = Math.random() * 100 + '%';
+          star.style.top = Math.random() * 100 + '%';
+          star.style.width = star.style.height = Math.random() * 3 + 1 + 'px';
+          star.style.animationDelay = Math.random() * 3 + 's';
+          starsContainer.appendChild(star);
         }
+      }
 
-        function createParticles() {
-            const particlesContainer = document.getElementById('particlesContainer');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 6 + 's';
-                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
-                particlesContainer.appendChild(particle);
-            }
+      function createParticles() {
+        const particlesContainer =
+          document.getElementById('particlesContainer');
+        for (let i = 0; i < 50; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          particle.style.left = Math.random() * 100 + '%';
+          particle.style.top = Math.random() * 100 + '%';
+          particle.style.animationDelay = Math.random() * 6 + 's';
+          particle.style.animationDuration = Math.random() * 4 + 4 + 's';
+          particlesContainer.appendChild(particle);
         }
+      }
 
-        const content = {
-            about: {
-                title: '> whoami',
-                content: `
-                    <h2 style="color: #00ff88; margin-bottom: 15px;">About Ibrahim Saif</h2>
-                    <p>🚀 Aspiring Software Developer & Computer Science Student</p>
-                    <p>📍 Based in Kuala Lumpur, Malaysia</p>
-                    
-                    <h3 style="color: #ff6b35; margin: 20px 0 10px 0;">Objective</h3>
+      const content = {
+        about: {
+          title: '> whoami',
+          content: `
+                    <h2 style="color: #00ff88; margin-bottom: 15px;">Ibrahim Saeed Mohammed Saif</h2>
+                    <p>🚀 Backend-focused Computer Science undergraduate</p>
+
+                    <h3 style="color: #ff6b35; margin: 20px 0 10px 0;">Professional Summary</h3>
                     <p style="font-size: 13px; line-height: 1.5;">
-                        Seeking internship opportunities to apply and enhance programming skills. 
-                        Passionate about contributing to innovative projects while gaining practical 
-                        industry exposure in backend systems, data management, and problem-solving.
+                        Backend-focused Computer Science undergraduate with production experience developing scalable, type-safe APIs and secure backend systems. Proficient in TypeScript, Hono.js, PostgreSQL, and serverless cloud environments, with experience implementing RBAC and optimizing database queries. Proven ability to deliver reliable backend features in collaborative, Agile development environments.
                     </p>
 
-                    <h3 style="color: #ff6b35; margin: 20px 0 10px 0;">Core Skills</h3>
+                    <h3 style="color: #ff6b35; margin: 20px 0 10px 0;">Technical Skills</h3>
                     <div class="tech-grid">
-                        <div class="tech-item">Problem Solving</div>
-                        <div class="tech-item">Fast Learner</div>
-                        <div class="tech-item">Pressure Work</div>
-                        <div class="tech-item">Backend Dev</div>
+                        <div class="tech-item">TypeScript</div>
+                        <div class="tech-item">Hono.js</div>
+                        <div class="tech-item">PostgreSQL</div>
+                        <div class="tech-item">Supabase</div>
+                        <div class="tech-item">Node.js</div>
+                        <div class="tech-item">React</div>
                     </div>
+                `,
+        },
+        experience: {
+          title: '> cat experience.log',
+          content: `
+                    <h2 style="color: #9d4edd; margin-bottom: 15px;">Work Experience �</h2>
 
-                    <h3 style="color: #ff6b35; margin: 20px 0 10px 0;">Interests</h3>
-                    <p>• Web & Mobile App Development</p>
-                    <p>• Software Development</p>
-                    <p>• Problem Solving & Algorithms</p>
-                `
-            },
-            python: {
-                title: '> python --version',
-                content: `
-                    <h2 style="color: #3776ab; margin-bottom: 15px;">Python Universe 🐍</h2>
-                    
-                    <div class="project-list">
+                    <div class="project-list" style="max-height: 350px;">
                         <div class="project-item">
-                            <h4>📁 File Manager</h4>
-                            <p>High-level file operations using shutil and Path libraries. 
-                            Comprehensive file management system with advanced operations.</p>
-                            <p><em>Tech: Python, shutil, pathlib</em></p>
-                        </div>
-                        
-                        <div class="project-item">
-                            <h4>📚 Library Management System</h4>
-                            <p>Complete library system with login functionality and admin controls. 
-                            Object-oriented approach with class-based architecture.</p>
-                            <p><em>Tech: Python, OOP, Authentication</em></p>
+                            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                                <h4 style="color: #c77dff; margin-bottom: 0;">Astra Velocity Sdn. Bhd.</h4>
+                                <span style="font-size: 11px; opacity: 0.8;">Sep 2025 - Jan 2026</span>
+                            </div>
+                            <p style="color: #e0aaff; font-weight: bold; margin-bottom: 8px; font-size: 12px;">Software Engineer Intern</p>
+                            <ul style="padding-left: 15px; font-size: 12px; line-height: 1.5; opacity: 0.9;">
+                                <li>Developed and shipped production backend features using <strong>TypeScript</strong>, emphasizing type safety to reduce runtime-related defects.</li>
+                                <li>Designed and implemented Role-Based Access Control (RBAC), protecting sensitive endpoints.</li>
+                                <li>Integrated <strong>Supabase (PostgreSQL)</strong> with REST APIs and optimized query patterns, reducing average query response time by 20%.</li>
+                                <li>Collaborated in an Agile environment through code reviews, debugging sessions, and feature planning.</li>
+                                <li>Made trade-offs between performance, security, and maintainability.</li>
+                            </ul>
+                            <p style="margin-top: 8px; font-size: 11px;"><em>Tech Stack: TypeScript, React, Tailwind CSS, Supabase, PostgreSQL, REST APIs</em></p>
                         </div>
                     </div>
-
-                    <h3 style="color: #ffd43b; margin: 15px 0 10px 0;">Python Skills</h3>
-                    <div class="tech-grid">
-                        <div class="tech-item">OOP</div>
-                        <div class="tech-item">File Operations</div>
-                        <div class="tech-item">Data Structures</div>
-                        <div class="tech-item">Algorithms</div>
-                        <div class="tech-item">System Design</div>
-                        <div class="tech-item">Libraries</div>
-                    </div>
-
-                    <p style="margin-top: 20px; font-size: 12px; opacity: 0.8;">
-                        💡 Python is my go-to language for rapid prototyping and system-level programming.
-                    </p>
-                `
-            },
-            java: {
-                title: '> javac -version',
-                content: `
+                `,
+        },
+        java: {
+          title: '> javac -version',
+          content: `
                     <h2 style="color: #ed8b00; margin-bottom: 15px;">Java Galaxy ☕</h2>
-                    
+
                     <div class="project-list">
                         <div class="project-item">
-                            <h4>🍔 Food Delivery App</h4>
-                            <p>Complete delivery application with intuitive GUI built using Java Swing Library. 
-                            Features order management, user interface, and delivery tracking.</p>
-                            <p><em>Tech: Java, Swing, GUI Development</em></p>
+                            <h4>🍔 Food Delivery Application</h4>
+                            <p>Developed a desktop-based application applying object-oriented design for order processing and inventory management.</p>
+                            <p><em>Tech: Java, Swing, OOP</em></p>
                         </div>
                     </div>
 
                     <h3 style="color: #f89820; margin: 20px 0 10px 0;">Java Expertise</h3>
                     <div class="tech-grid">
-                        <div class="tech-item">Swing GUI</div>
+                        <div class="tech-item">Java</div>
                         <div class="tech-item">OOP Concepts</div>
-                        <div class="tech-item">Desktop Apps</div>
-                        <div class="tech-item">Event Handling</div>
-                        <div class="tech-item">MVC Pattern</div>
-                        <div class="tech-item">Java SE</div>
+                        <div class="tech-item">Swing GUI</div>
                     </div>
 
-                    <h3 style="color: #f89820; margin: 20px 0 10px 0;">Key Features</h3>
-                    <p>• Cross-platform desktop applications</p>
-                    <p>• Rich user interface development</p>
-                    <p>• Object-oriented design patterns</p>
-                    <p>• Event-driven programming</p>
-
                     <p style="margin-top: 20px; font-size: 12px; opacity: 0.8;">
-                        ☕ Java enables me to build robust, scalable desktop applications with rich UIs.
+                        ☕ Strong foundation in Java and Object-Oriented Programming methodologies.
                     </p>
-                `
-            },
-            cpp: {
-                title: '> g++ --version',
-                content: `
-                    <h2 style="color: #00599c; margin-bottom: 15px;">C/C++ Systems 🔧</h2>
-                    
+                `,
+        },
+        cpp: {
+          title: '> gcc --version',
+          content: `
+                    <h2 style="color: #00599c; margin-bottom: 15px;">C Systems 🔧</h2>
+
                     <div class="project-list">
                         <div class="project-item">
                             <h4>🏨 Hotel Management System</h4>
-                            <p>Contributed to building a comprehensive Hotel Management System 
-                            focusing on Customer Services module. System-level programming with efficient resource management.</p>
-                            <p><em>Tech: C Programming, System Design</em></p>
+                            <p>Contributed to the Customer Services module, working with low-level data structures and manual memory management.</p>
+                            <p><em>Tech: C Programming</em></p>
                         </div>
                     </div>
 
-                    <h3 style="color: #004482; margin: 20px 0 10px 0;">C/C++ Skills</h3>
+                    <h3 style="color: #004482; margin: 20px 0 10px 0;">C Skills</h3>
                     <div class="tech-grid">
                         <div class="tech-item">Memory Mgmt</div>
-                        <div class="tech-item">Pointers</div>
                         <div class="tech-item">Data Structures</div>
-                        <div class="tech-item">Algorithms</div>
-                        <div class="tech-item">System Programming</div>
-                        <div class="tech-item">Performance</div>
+                        <div class="tech-item">Pointers</div>
                     </div>
 
-                    <h3 style="color: #004482; margin: 20px 0 10px 0;">Core Strengths</h3>
-                    <p>• Low-level system programming</p>
-                    <p>• Memory management and optimization</p>
-                    <p>• Data structure implementation</p>
-                    <p>• Performance-critical applications</p>
-
                     <p style="margin-top: 20px; font-size: 12px; opacity: 0.8;">
-                        🔧 C/C++ provides the foundation for understanding computer systems and efficient programming.
+                        🔧 C provides the foundation for understanding computer systems and efficient manual memory management.
                     </p>
-                `
-            },
-            web: {
-                title: '> npm start',
-                content: `
+                `,
+        },
+        web: {
+          title: '> npm start',
+          content: `
                     <h2 style="color: #e34c26; margin-bottom: 15px;">Web Technologies 🌐</h2>
-                    
-                    <div class="project-list">
+
+                    <div class="project-list" style="max-height: 250px;">
                         <div class="project-item">
                             <h4>📧 Email Service API</h4>
-                            <p>RESTful email service API built with modern web technologies. 
-                            Features Node.js backend, TypeScript for type safety, and efficient runtime.</p>
-                            <p><em>Tech: Node.js, TypeScript, Hono.js, Nodemailer, Bun</em></p>
+                            <ul style="padding-left: 15px; font-size: 12px; line-height: 1.5; opacity: 0.9;">
+                                <li>Leveraged Bun and Hono.js to build a low-latency REST API, optimizing for high throughput in a serverless-compatible environment.</li>
+                                <li>Enforced strict runtime validation using Zod, preventing data inconsistencies and ensuring end-to-end type safety.</li>
+                                <li>Architected a reusable email dispatch service using Nodemailer capable of handling dynamic transactional templates.</li>
+                            </ul>
+                            <p style="margin-top: 8px; font-size: 11px;"><em>Tech: Hono.js, TypeScript, Bun</em></p>
                         </div>
                     </div>
 
                     <h3 style="color: #f06529; margin: 20px 0 10px 0;">Web Stack</h3>
                     <div class="tech-grid">
-                        <div class="tech-item">HTML5</div>
-                        <div class="tech-item">CSS3</div>
-                        <div class="tech-item">JavaScript</div>
                         <div class="tech-item">TypeScript</div>
+                        <div class="tech-item">Hono.js</div>
+                        <div class="tech-item">Bun</div>
+                        <div class="tech-item">Zod</div>
                         <div class="tech-item">Node.js</div>
-                        <div class="tech-item">APIs</div>
+                        <div class="tech-item">REST APIs</div>
                     </div>
 
-                    <h3 style="color: #264de4; margin: 20px 0 10px 0;">Modern Tools</h3>
-                    <p>• <strong>Hono.js:</strong> Fast, lightweight web framework</p>
-                    <p>• <strong>Bun:</strong> Fast JavaScript runtime and bundler</p>
-                    <p>• <strong>Nodemailer:</strong> Email sending capabilities</p>
-                    <p>• <strong>RESTful APIs:</strong> Modern API development</p>
-
                     <p style="margin-top: 20px; font-size: 12px; opacity: 0.8;">
-                        🌐 Building modern web applications with cutting-edge technologies and best practices.
+                        🌐 Focus on scalable, type-safe API backends for robust cloud solutions.
                     </p>
-                `
-            }
-        };
+                `,
+        },
+      };
 
-        function showInfo(section) {
-            const panel = document.getElementById('infoPanel');
-            const panelContent = document.getElementById('panelContent');
-            
-            panelContent.innerHTML = content[section].content;
-            panel.classList.add('active');
+      function showInfo(section) {
+        const panel = document.getElementById('infoPanel');
+        const panelContent = document.getElementById('panelContent');
 
-            const title = document.createElement('div');
-            title.style.color = '#00ff88';
-            title.style.fontSize = '16px';
-            title.style.marginBottom = '15px';
-            title.style.fontFamily = 'Courier New, monospace';
-            
-            panelContent.insertBefore(title, panelContent.firstChild);
-            
-            typeText(title, content[section].title, 0);
+        panelContent.innerHTML = content[section].content;
+        panel.classList.add('active');
+
+        const title = document.createElement('div');
+        title.style.color = '#00ff88';
+        title.style.fontSize = '16px';
+        title.style.marginBottom = '15px';
+        title.style.fontFamily = 'Courier New, monospace';
+
+        panelContent.insertBefore(title, panelContent.firstChild);
+
+        typeText(title, content[section].title, 0);
+      }
+
+      function typeText(element, text, index) {
+        if (index < text.length) {
+          element.textContent = text.substring(0, index + 1) + '|';
+          setTimeout(() => typeText(element, text, index + 1), 50);
+        } else {
+          element.textContent = text;
+          element.classList.add('typing-effect');
         }
+      }
 
-        function typeText(element, text, index) {
-            if (index < text.length) {
-                element.textContent = text.substring(0, index + 1) + '|';
-                setTimeout(() => typeText(element, text, index + 1), 50);
-            } else {
-                element.textContent = text;
-                element.classList.add('typing-effect');
-            }
-        }
+      function closeInfo() {
+        document.getElementById('infoPanel').classList.remove('active');
+      }
 
-        function closeInfo() {
-            document.getElementById('infoPanel').classList.remove('active');
-        }
-
-        window.addEventListener('load', () => {
-            createStars();
-            createParticles();
-            
-            setTimeout(() => {
-                document.getElementById('loadingScreen').classList.add('hidden');
-            }, 2000);
-        });
-
-        document.addEventListener('mousemove', (e) => {
-            const particles = document.querySelectorAll('.particle');
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-            
-            particles.forEach((particle, index) => {
-                const speed = (index % 3 + 1) * 0.5;
-                const x = (mouseX - 0.5) * speed * 10;
-                const y = (mouseY - 0.5) * speed * 10;
-                particle.style.transform = `translate(${x}px, ${y}px)`;
-            });
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeInfo();
-            } else if (e.key === '1') {
-                showInfo('about');
-            } else if (e.key === '2') {
-                showInfo('python');
-            } else if (e.key === '3') {
-                showInfo('java');
-            } else if (e.key === '4') {
-                showInfo('cpp');
-            } else if (e.key === '5') {
-                showInfo('web');
-            }
-        });
-
-        document.querySelectorAll('.planet').forEach(planet => {
-            planet.addEventListener('mouseenter', () => {
-                planet.style.boxShadow = '0 0 40px currentColor, 0 0 60px currentColor';
-                planet.style.transform = 'scale(1.3)';
-            });
-            
-            planet.addEventListener('mouseleave', () => {
-                planet.style.boxShadow = '0 0 20px currentColor';
-                planet.style.transform = 'scale(1)';
-            });
-        });
-
-        document.querySelector('.center-sun').addEventListener('mouseenter', () => {
-            document.querySelector('.center-sun').style.animation = 'pulse 0.5s infinite alternate, rotate 20s linear infinite';
-        });
-
-        document.querySelector('.center-sun').addEventListener('mouseleave', () => {
-            document.querySelector('.center-sun').style.animation = 'pulse 2s infinite alternate, rotate 20s linear infinite';
-        });
-
-        function createShootingStar() {
-            const shootingStar = document.createElement('div');
-            shootingStar.style.position = 'fixed';
-            shootingStar.style.width = '2px';
-            shootingStar.style.height = '2px';
-            shootingStar.style.background = 'linear-gradient(45deg, transparent, #fff, transparent)';
-            shootingStar.style.borderRadius = '50%';
-            shootingStar.style.top = Math.random() * 50 + '%';
-            shootingStar.style.left = '-10px';
-            shootingStar.style.zIndex = '5';
-            shootingStar.style.boxShadow = '0 0 10px #fff';
-            
-            document.body.appendChild(shootingStar);
-            
-            shootingStar.animate([
-                { transform: 'translateX(-10px) translateY(0px)', opacity: 0 },
-                { transform: 'translateX(50px) translateY(-20px)', opacity: 1 },
-                { transform: 'translateX(' + (window.innerWidth + 50) + 'px) translateY(-100px)', opacity: 0 }
-            ], {
-                duration: 3000,
-                easing: 'ease-out'
-            }).onfinish = () => {
-                document.body.removeChild(shootingStar);
-            };
-        }
-
-        setInterval(createShootingStar, 8000);
+      window.addEventListener('load', () => {
+        createStars();
+        createParticles();
 
         setTimeout(() => {
-            const hasVisited = sessionStorage.getItem ? sessionStorage.getItem('visitedBefore') : false;
-            if (!hasVisited) {
-                const welcomeDiv = document.createElement('div');
-                welcomeDiv.style.cssText = `
+          document.getElementById('loadingScreen').classList.add('hidden');
+        }, 2000);
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        const particles = document.querySelectorAll('.particle');
+        const mouseX = e.clientX / window.innerWidth;
+        const mouseY = e.clientY / window.innerHeight;
+
+        particles.forEach((particle, index) => {
+          const speed = ((index % 3) + 1) * 0.5;
+          const x = (mouseX - 0.5) * speed * 10;
+          const y = (mouseY - 0.5) * speed * 10;
+          particle.style.transform = `translate(${x}px, ${y}px)`;
+        });
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeInfo();
+        } else if (e.key === '1') {
+          showInfo('about');
+        } else if (e.key === '2') {
+          showInfo('experience');
+        } else if (e.key === '3') {
+          showInfo('java');
+        } else if (e.key === '4') {
+          showInfo('cpp');
+        } else if (e.key === '5') {
+          showInfo('web');
+        }
+      });
+
+      document.querySelectorAll('.planet').forEach((planet) => {
+        planet.addEventListener('mouseenter', () => {
+          planet.style.boxShadow =
+            '0 0 40px currentColor, 0 0 60px currentColor';
+          planet.style.transform = 'scale(1.3)';
+        });
+
+        planet.addEventListener('mouseleave', () => {
+          planet.style.boxShadow = '0 0 20px currentColor';
+          planet.style.transform = 'scale(1)';
+        });
+      });
+
+      document
+        .querySelector('.center-sun')
+        .addEventListener('mouseenter', () => {
+          document.querySelector('.center-sun').style.animation =
+            'pulse 0.5s infinite alternate, rotate 20s linear infinite';
+        });
+
+      document
+        .querySelector('.center-sun')
+        .addEventListener('mouseleave', () => {
+          document.querySelector('.center-sun').style.animation =
+            'pulse 2s infinite alternate, rotate 20s linear infinite';
+        });
+
+      function createShootingStar() {
+        const shootingStar = document.createElement('div');
+        shootingStar.style.position = 'fixed';
+        shootingStar.style.width = '2px';
+        shootingStar.style.height = '2px';
+        shootingStar.style.background =
+          'linear-gradient(45deg, transparent, #fff, transparent)';
+        shootingStar.style.borderRadius = '50%';
+        shootingStar.style.top = Math.random() * 50 + '%';
+        shootingStar.style.left = '-10px';
+        shootingStar.style.zIndex = '5';
+        shootingStar.style.boxShadow = '0 0 10px #fff';
+
+        document.body.appendChild(shootingStar);
+
+        shootingStar.animate(
+          [
+            { transform: 'translateX(-10px) translateY(0px)', opacity: 0 },
+            { transform: 'translateX(50px) translateY(-20px)', opacity: 1 },
+            {
+              transform:
+                'translateX(' +
+                (window.innerWidth + 50) +
+                'px) translateY(-100px)',
+              opacity: 0,
+            },
+          ],
+          {
+            duration: 3000,
+            easing: 'ease-out',
+          },
+        ).onfinish = () => {
+          document.body.removeChild(shootingStar);
+        };
+      }
+
+      setInterval(createShootingStar, 8000);
+
+      setTimeout(() => {
+        const hasVisited = sessionStorage.getItem
+          ? sessionStorage.getItem('visitedBefore')
+          : false;
+        if (!hasVisited) {
+          const welcomeDiv = document.createElement('div');
+          welcomeDiv.style.cssText = `
                     position: fixed;
                     top: 50%;
                     left: 50%;
@@ -919,8 +977,8 @@
                     max-width: 400px;
                     box-shadow: 0 0 50px rgba(0, 255, 136, 0.5);
                 `;
-                
-                welcomeDiv.innerHTML = `
+
+          welcomeDiv.innerHTML = `
                     <h2 style="color: #00ff88; margin-bottom: 15px;">Welcome to Ibrahim's Code Universe! 🚀</h2>
                     <p style="margin-bottom: 15px; font-size: 14px;">
                         Navigate through my projects by clicking on the orbiting planets, or use keyboard shortcuts (1-5).
@@ -934,43 +992,43 @@
                         Enter Universe
                     </button>
                 `;
-                
-                document.body.appendChild(welcomeDiv);
-                
-                document.getElementById('enterBtn').onclick = () => {
-                    welcomeDiv.remove();
-                    if (sessionStorage.setItem) sessionStorage.setItem('visitedBefore', 'true');
-                };
-            }
-        }, 3000);
 
+          document.body.appendChild(welcomeDiv);
 
-        let touchStartX = 0;
-        let touchStartY = 0;
+          document.getElementById('enterBtn').onclick = () => {
+            welcomeDiv.remove();
+            if (sessionStorage.setItem)
+              sessionStorage.setItem('visitedBefore', 'true');
+          };
+        }
+      }, 3000);
 
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-        });
+      let touchStartX = 0;
+      let touchStartY = 0;
 
-        document.addEventListener('touchmove', (e) => {
-            if (document.getElementById('infoPanel').classList.contains('active')) {
-                const touchX = e.touches[0].clientX;
-                const touchY = e.touches[0].clientY;
-                const deltaX = touchX - touchStartX;
-                
-                if (deltaX < -100) { 
-                    closeInfo();
-                }
-            }
-        });
+      document.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      });
 
-        console.log(`
+      document.addEventListener('touchmove', (e) => {
+        if (document.getElementById('infoPanel').classList.contains('active')) {
+          const touchX = e.touches[0].clientX;
+          const touchY = e.touches[0].clientY;
+          const deltaX = touchX - touchStartX;
+
+          if (deltaX < -100) {
+            closeInfo();
+          }
+        }
+      });
+
+      console.log(`
     🚀 Welcome to Ibrahim's Code Universe!
     
     Available commands:
     - showInfo('about') - Learn about Ibrahim
-    - showInfo('python') - Python projects
+    - showInfo('experience') - Work experience
     - showInfo('java') - Java applications  
     - showInfo('cpp') - C/C++ systems
     - showInfo('web') - Web technologies
@@ -981,5 +1039,5 @@
     Built with ❤️ using vanilla HTML, CSS, and JavaScript
         `);
     </script>
-</body>
+  </body>
 </html>
