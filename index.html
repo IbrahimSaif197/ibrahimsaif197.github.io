@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ibrahim Saif, backend engineer</title>
-  <meta name="description" content="Ibrahim Saif is a backend engineer in Malaysia building type-safe APIs with TypeScript, Hono.js, PostgreSQL and serverless platforms.">
+  <title>Ibrahim Saif, full-stack engineer</title>
+  <meta name="description" content="Ibrahim Saif is a full-stack engineer in Malaysia building type-safe web and mobile apps with TypeScript, React, React Native, Hono.js and PostgreSQL.">
   <meta name="theme-color" content="#000000">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3 30 28H2Z' fill='none' stroke='%238052ff' stroke-width='3'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,9 +47,9 @@
     <!-- data-shape: index into the constellation shapes in main.js; data-side: where the constellation sits -->
     <section class="split split--left hero" data-shape="0" data-side="right" data-name="Intro">
       <div class="split__text">
-        <p class="label reveal">Backend engineer in Malaysia</p>
-        <h1 class="display split-lines">I build the part you don't see.</h1>
-        <p class="body reveal">I'm Ibrahim, a Computer Science graduate from Asia Pacific University. I write type-safe APIs in TypeScript and Hono, run them on Cloudflare Workers, and design PostgreSQL schemas that keep every customer's data where it belongs.</p>
+        <p class="label reveal">Full-stack engineer in Malaysia</p>
+        <h1 class="display split-lines">From the screen to the database.</h1>
+        <p class="body reveal">I'm Ibrahim, a Computer Science graduate from Asia Pacific University. I build type-safe web and mobile apps end to end: React and React Native interfaces, Hono APIs on Cloudflare Workers, and PostgreSQL schemas that keep every customer's data where it belongs.</p>
         <div class="actions reveal">
           <a class="btn magnetic" href="#work">See my work</a>
           <a class="ghost" href="Ibrahim%27s%20CV.pdf" download>Download CV</a>
@@ -58,23 +58,37 @@
       <a class="scroll-hint" href="#experience" aria-label="Scroll to experience"><span></span></a>
     </section>
 
-    <section id="experience" class="split split--right" data-shape="1" data-side="left" data-name="Experience">
+    <section id="experience" class="split split--right" data-shape="1" data-side="left" data-name="Freelance">
       <div class="split__text">
         <p class="label reveal">Experience</p>
-        <h2 class="heading-lg split-lines">Production backends at Astra Velocity.</h2>
+        <h2 class="heading-lg split-lines">Seeing Eejari and Neo CRM through to launch.</h2>
+        <p class="meta reveal">Freelance Full-Stack Developer, Feb 2026 to Jul 2026</p>
+        <ul class="points">
+          <li class="reveal">Built the Eejari mobile app in React Native (Expo), in Arabic and English with full right-to-left layouts.</li>
+          <li class="reveal">Got Eejari ready for launch: OTP sign-up and password reset, rate limiting, ID-verified landlords and account deletion.</li>
+          <li class="reveal">Shipped Neo CRM to production with a tested, validated service layer for leads, and fixed its visa tracking.</li>
+        </ul>
+        <p class="meta reveal">React Native, Expo, TypeScript, Hono.js</p>
+      </div>
+    </section>
+
+    <section class="split split--left" data-shape="2" data-side="right" data-name="Astra Velocity">
+      <div class="split__text">
+        <p class="label reveal">Internship</p>
+        <h2 class="heading-lg split-lines">Two products, front to back, at Astra Velocity.</h2>
         <p class="meta reveal">Software Engineer Intern, Sep 2025 to Jan 2026</p>
         <ul class="points">
-          <li class="reveal">Designed role-based access control that guards every sensitive endpoint, so each user reaches only what their role allows.</li>
-          <li class="reveal">Tuned how the REST APIs query Supabase and cut average response time by <em class="spark">20%</em>.</li>
-          <li class="reveal">Shipped features in strict TypeScript, catching whole classes of runtime bugs before they reached production.</li>
-          <li class="reveal">Worked through code reviews, debugging sessions and sprint planning with the team, weighing speed against security and upkeep on every feature.</li>
+          <li class="reveal">Built Neo CRM, a lead-management system for a study-abroad agency: a React and Tailwind CSS dashboard with CSV import, export and dark mode, on a Hono.js API running on Cloudflare Workers with Prisma.</li>
+          <li class="reveal">Added live EMGS visa-status tracking by scraping, and role-based access that separates admins from counsellors.</li>
+          <li class="reveal">Built the Hono.js API for Eejari, a property-rental app for tenants, landlords and admins: listings with filters, sorting and pagination, image uploads, reviews and admin moderation.</li>
+          <li class="reveal">Tuned Supabase query patterns and cut average query response time by <em class="spark">20%</em>.</li>
         </ul>
-        <p class="meta reveal">TypeScript, React, Next.js, Tailwind CSS, Supabase, PostgreSQL</p>
+        <p class="meta reveal">TypeScript, React, Tailwind CSS, Zustand, Hono.js, Cloudflare Workers, Prisma, Supabase</p>
         <p class="edu reveal">BSc (Hons) Computer Science, Asia Pacific University, 2023 to 2026</p>
       </div>
     </section>
 
-    <section id="work" class="split split--left" data-shape="2" data-side="right" data-name="Agensity">
+    <section id="work" class="split split--right" data-shape="3" data-side="left" data-name="Agensity">
       <div class="split__text">
         <p class="label reveal">Agensity, multi-tenant SaaS</p>
         <h2 class="heading-lg split-lines">A CRM for study-abroad agencies.</h2>
@@ -84,7 +98,7 @@
       </div>
     </section>
 
-    <section class="split split--right" data-shape="3" data-side="left" data-name="Earshot">
+    <section class="split split--left" data-shape="4" data-side="right" data-name="Earshot">
       <div class="split__text">
         <p class="label reveal">Earshot, on-device AI</p>
         <h2 class="heading-lg split-lines">Meeting notes that never leave your laptop.</h2>
@@ -93,7 +107,7 @@
       </div>
     </section>
 
-    <section class="split split--left" data-shape="4" data-side="right" data-name="EduPeer">
+    <section class="split split--right" data-shape="5" data-side="left" data-name="EduPeer">
       <div class="split__text">
         <p class="label reveal">EduPeer, final year project</p>
         <h2 class="heading-lg split-lines">An AI tutor that gives hints, not answers.</h2>
@@ -103,7 +117,7 @@
       </div>
     </section>
 
-    <section class="split split--right" data-shape="5" data-side="left" data-name="SiagaBantu">
+    <section class="split split--left" data-shape="6" data-side="right" data-name="SiagaBantu">
       <div class="split__text">
         <p class="label reveal">SiagaBantu, disaster relief</p>
         <h2 class="heading-lg split-lines">Aid requests from evacuation centres, delivered fast.</h2>
@@ -112,14 +126,14 @@
       </div>
     </section>
 
-    <section id="stack" class="split split--left" data-shape="6" data-side="right" data-name="Stack">
+    <section id="stack" class="split split--right" data-shape="7" data-side="left" data-name="Stack">
       <div class="split__text">
         <p class="label reveal">Toolkit</p>
         <h2 class="heading-lg split-lines">What I work with.</h2>
         <dl class="stack">
-          <div class="reveal"><dt>Backend and cloud</dt><dd>Hono.js, Node.js, Bun, FastAPI, ASP.NET Core, Cloudflare Workers, AWS SNS and SQS, Supabase, PostgreSQL, Prisma, Next.js</dd></div>
           <div class="reveal"><dt>Languages</dt><dd>TypeScript, JavaScript, SQL, Python, C#, Java, C</dd></div>
-          <div class="reveal"><dt>Frontend</dt><dd>React, Tailwind CSS, HTML, CSS</dd></div>
+          <div class="reveal"><dt>Frontend</dt><dd>React, React Native (Expo), Next.js, Tailwind CSS, Zustand, HTML, CSS</dd></div>
+          <div class="reveal"><dt>Backend and cloud</dt><dd>Hono.js, Node.js, Bun, FastAPI, ASP.NET Core, Cloudflare Workers, AWS SNS and SQS, Supabase, PostgreSQL, Prisma, REST APIs</dd></div>
           <div class="reveal"><dt>Tools</dt><dd>Git, GitHub, Zod, Postman, VS Code</dd></div>
         </dl>
         <p class="label label--sub reveal">More on GitHub</p>
@@ -132,11 +146,11 @@
       </div>
     </section>
 
-    <section id="contact" class="split split--left contact" data-shape="7" data-side="right" data-name="Contact">
+    <section id="contact" class="split split--left contact" data-shape="8" data-side="right" data-name="Contact">
       <div class="split__text">
         <p class="label reveal">Contact</p>
-        <h2 class="display split-lines">Need a backend built?</h2>
-        <p class="body reveal">I'm looking for backend and full-stack roles. Email is the fastest way to reach me, and I reply within a day.</p>
+        <h2 class="display split-lines">Need something built?</h2>
+        <p class="body reveal">I'm looking for full-stack and backend roles. Email is the fastest way to reach me, and I reply within a day.</p>
         <div class="actions reveal">
           <a class="btn magnetic" href="mailto:dev.ibrahim.saif@gmail.com">Email me</a>
           <a class="ghost" href="https://github.com/IbrahimSaif197" target="_blank" rel="noopener">GitHub</a>

@@ -33,7 +33,21 @@ const shapes = [
     x += Math.sign(x || 1) * 0.07;                            // longitudinal fissure
     return [x, y + 0.1, z];
   },
-  // 1 database: three stacked cylinders
+  // 1 phone: a mobile app frame with right-aligned rows (Eejari is Arabic-first, right to left)
+  () => {
+    const k = rnd(), hw = 0.6, hh = 1.15;
+    if (k < 0.62) {
+      const a = rnd() * TAU, c = Math.cos(a), sn = Math.sin(a), e = 2 / 8;
+      return [hw * Math.sign(c) * Math.abs(c) ** e, hh * Math.sign(sn) * Math.abs(sn) ** e, (rnd() < 0.5 ? -1 : 1) * 0.07];
+    }
+    if (k < 0.9) {
+      const row = Math.floor(rnd() * 7), y = 0.78 - row * 0.27, len = row === 0 ? 0.76 : 0.25 + 0.5 * Math.abs(Math.sin(row * 2.3));
+      const h = row === 0 ? 0.16 : 0.035;
+      return [0.38 - rnd() * len, y + (rnd() - 0.5) * h, 0];
+    }
+    return [(rnd() - 0.5) * 0.3, 0.98 + (rnd() - 0.5) * 0.03, 0.02];
+  },
+  // 2 database: three stacked cylinders
   () => {
     const tier = Math.floor(rnd() * 3), cy = (tier - 1) * 0.72, a = rnd() * TAU, R = 1.05;
     const k = rnd();
@@ -41,34 +55,34 @@ const shapes = [
     const rr = k < 0.85 ? R : R * Math.sqrt(rnd());                                    // rim or lid
     return [Math.cos(a) * rr, cy + 0.25, Math.sin(a) * rr];
   },
-  // 2 tenants: five isolated shells around a core
+  // 3 tenants: five isolated shells around a core
   () => {
     const [x, y, z] = onSphere();
     if (rnd() < 0.14) return [x * 0.28, y * 0.28, z * 0.28];
     const t = Math.floor(rnd() * 5), a = (t / 5) * TAU + 0.3;
     return [Math.cos(a) * 1.15 + x * 0.42, Math.sin(a * 2) * 0.25 + y * 0.42, Math.sin(a) * 1.15 + z * 0.42];
   },
-  // 3 equaliser: a ring of audio bars, readable from any angle as it spins
+  // 4 equaliser: a ring of audio bars, readable from any angle as it spins
   () => {
     const bars = 36, b = Math.floor(rnd() * bars), a = (b / bars) * TAU, R = 1.1;
     const h = 0.18 + 0.95 * Math.abs(Math.sin(b * 1.7) * Math.cos(b * 0.45));
     const j = () => (rnd() - 0.5) * 0.05;
     return [Math.cos(a) * R + j(), (rnd() * 2 - 1) * h, Math.sin(a) * R + j()];
   },
-  // 4 helix: two strands with rungs, a path of hints
+  // 5 helix: two strands with rungs, a path of hints
   () => {
     const t = rnd(), a = t * TAU * 2.4, y = (t - 0.5) * 2.9;
     if (rnd() < 0.18) { const m = rnd() * 2 - 1, aa = Math.round(a / 0.6) * 0.6; return [Math.cos(aa) * 0.75 * m, (aa / (TAU * 2.4) - 0.5) * 2.9, Math.sin(aa) * 0.75 * m]; }
     const off = rnd() < 0.5 ? 0 : Math.PI, j = () => (rnd() - 0.5) * 0.08;
     return [Math.cos(a + off) * 0.75 + j(), y + j(), Math.sin(a + off) * 0.75 + j()];
   },
-  // 5 radar: concentric alert rings around a beacon
+  // 6 radar: concentric alert rings around a beacon
   () => {
     if (rnd() < 0.12) return [(rnd() - 0.5) * 0.06, rnd() * 1.4 - 0.2, (rnd() - 0.5) * 0.06];
     const ring = 1 + Math.floor(rnd() * 5), r = ring * 0.32, a = rnd() * TAU;
     return [Math.cos(a) * r, -0.2 + Math.sin(ring + a * 3) * 0.03, Math.sin(a) * r];
   },
-  // 6 globe: latitude and longitude lines, the cloud
+  // 7 globe: latitude and longitude lines, the cloud
   () => {
     const R = 1.25, a = rnd() * TAU;
     if (rnd() < 0.5) { const lat = (Math.floor(rnd() * 7) - 3) * 0.38; return [Math.cos(lat) * Math.cos(a) * R, Math.sin(lat) * R, Math.cos(lat) * Math.sin(a) * R]; }
@@ -76,7 +90,7 @@ const shapes = [
     return [Math.cos(a) * Math.cos(lon) * R, Math.sin(a) * R, Math.cos(a) * Math.sin(lon) * R];
   },
 ];
-shapes.push(shapes[0]); // 7 contact: back to the brain
+shapes.push(shapes[0]); // last (contact): back to the brain
 
 /* ======================================================================
    Three.js scene
@@ -96,7 +110,7 @@ const geo = new THREE.BufferGeometry();
 const targets = shapes.map(() => new Float32Array(N * 3));
 const rand = new Float32Array(N * 4), col = new Float32Array(N * 3);
 for (let i = 0; i < N; i++) {
-  shapes.forEach((fn, s) => targets[s].set(s === 7 ? targets[0].subarray(i * 3, i * 3 + 3) : fn(), i * 3));
+  shapes.forEach((fn, s) => targets[s].set(s === shapes.length - 1 ? targets[0].subarray(i * 3, i * 3 + 3) : fn(), i * 3));
   rand.set([rnd(), rnd(), rnd(), rnd()], i * 4);
   const c = PALETTE[Math.floor(rnd() * PALETTE.length)];
   col.set([c.r, c.g, c.b], i * 3);
@@ -142,7 +156,7 @@ const material = new THREE.ShaderMaterial({
   depthWrite: false,
   blending: THREE.AdditiveBlending,
   vertexShader: /* glsl */`
-    attribute vec3 s1; attribute vec3 s2; attribute vec3 s3; attribute vec3 s4; attribute vec3 s5; attribute vec3 s6; attribute vec3 s7;
+    attribute vec3 s1; attribute vec3 s2; attribute vec3 s3; attribute vec3 s4; attribute vec3 s5; attribute vec3 s6; attribute vec3 s7; attribute vec3 s8;
     attribute vec4 aRand; attribute vec3 aColor;
     uniform float uTime, uMorph, uScatter, uAspect, uSize, uAlpha, uPixel;
     uniform vec2 uMouse;
@@ -150,14 +164,14 @@ const material = new THREE.ShaderMaterial({
 
     vec3 shape(float i){
       if (i < 0.5) return position; if (i < 1.5) return s1; if (i < 2.5) return s2; if (i < 3.5) return s3;
-      if (i < 4.5) return s4; if (i < 5.5) return s5; if (i < 6.5) return s6; return s7;
+      if (i < 4.5) return s4; if (i < 5.5) return s5; if (i < 6.5) return s6; if (i < 7.5) return s7; return s8;
     }
     void main(){
       float base = floor(uMorph);
       float f = uMorph - base;
       // stagger: each particle leaves a little later than the last, so shapes dissolve rather than snap
       float t = smoothstep(0.0, 1.0, clamp((f - aRand.x * 0.35) / 0.65, 0.0, 1.0));
-      vec3 p = mix(shape(base), shape(min(base + 1.0, 7.0)), t);
+      vec3 p = mix(shape(base), shape(min(base + 1.0, 8.0)), t);
 
       // mid-flight swirl
       float flight = sin(t * 3.14159);
@@ -277,6 +291,8 @@ document.querySelectorAll('a, button').forEach(el => {
 /* ---------- render loop ---------- */
 const clock = new THREE.Clock();
 let scrollVel = 0;
+let activeShape = 0;
+const FLAT = new Set([1]); // flat shapes sway to face the camera instead of spinning edge-on
 function frame() {
   const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
   uniforms.uTime.value = t;
@@ -286,7 +302,10 @@ function frame() {
   uniforms.uMouse.value.copy(ndcMouse);
 
   const spin = reduced ? 0 : dt * (0.12 + Math.min(Math.abs(scrollVel) * 0.004, 0.6));
-  constellation.rotation.y += spin;
+  if (FLAT.has(activeShape)) {
+    const facing = Math.round(constellation.rotation.y / TAU) * TAU + (reduced ? 0 : Math.sin(t * 0.6) * 0.45);
+    constellation.rotation.y += (facing - constellation.rotation.y) * 0.04;
+  } else constellation.rotation.y += spin;
   group.rotation.x += ((-pointer.y * 0.25 + 0.15) - group.rotation.x) * 0.05;
   group.rotation.z += ((pointer.x * 0.08) - group.rotation.z) * 0.05;
   camera.position.x += (pointer.x * 0.35 - camera.position.x) * 0.04;
@@ -333,7 +352,8 @@ sections.forEach((sec, i) => {
     trigger: sec, start: 'top 55%', end: 'bottom 55%',
     onToggle: self => {
       if (!self.isActive) return;
-      gsap.to(uniforms.uMorph, { value: +sec.dataset.shape, duration: reduced ? 0 : 2.2, ease: 'power2.inOut', overwrite: true });
+      activeShape = +sec.dataset.shape;
+      gsap.to(uniforms.uMorph, { value: activeShape, duration: reduced ? 0 : 2.2, ease: 'power2.inOut', overwrite: true });
       view.side = sec.dataset.side === 'left' ? -1 : 1;
       placeGroup(reduced ? 0 : 1.8);
       dots.querySelectorAll('button').forEach((d, j) => d.classList.toggle('is-active', j === i));
