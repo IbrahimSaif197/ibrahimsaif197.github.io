@@ -33,7 +33,7 @@ const shapes = [
     x += Math.sign(x || 1) * 0.07;                            // longitudinal fissure
     return [x, y + 0.1, z];
   },
-  // 1 phone: a mobile app frame with right-aligned rows (Eejari is Arabic-first, right to left)
+  // 1 phone: a mobile app frame with right-aligned rows (the rental app is Arabic-first, right to left)
   () => {
     const k = rnd(), hw = 0.6, hh = 1.15;
     if (k < 0.62) {
